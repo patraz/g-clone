@@ -72,6 +72,8 @@ MIDDLEWARE = [
     "django.contrib.auth.middleware.AuthenticationMiddleware",
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
+    "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",
 ]
 
 ROOT_URLCONF = "gumroad_clone.urls"
@@ -99,12 +101,22 @@ WSGI_APPLICATION = "gumroad_clone.wsgi.application"
 # Database
 # https://docs.djangoproject.com/en/4.1/ref/settings/#databases
 
+# DATABASES = {
+#     "default": {
+#         "ENGINE": "django.db.backends.sqlite3",
+#         "NAME": BASE_DIR / "db.sqlite3",
+#     }
+# }
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.sqlite3",
-        "NAME": BASE_DIR / "db.sqlite3",
+    'default': {
+        'ENGINE': 'django.db.backends.mysql',
+        'NAME': '30p1996$gumroad',
+        'USER': '30p1996',
+        'PASSWORD': 'gumroaD123',
+        'HOST': '30p1996.mysql.pythonanywhere-services.com',
     }
 }
+
 ADMIN_URL = "admin/"
 
 # Password validation
@@ -142,6 +154,10 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/4.1/howto/static-files/
 
 STATIC_URL = "static/"
+STATIC_ROOT = "/var/www/30p1996/static"
+
+MEDIA_URL="/media/"
+MEDIA_ROOT=BASE_DIR.join('media/')
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
@@ -164,3 +180,4 @@ AUTH_USER_MODEL = "users.User"
 LOGIN_REDIRECT_URL = "users:redirect"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
 LOGIN_URL = "account_login"
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"

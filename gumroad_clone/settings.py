@@ -11,7 +11,7 @@ https://docs.djangoproject.com/en/4.1/ref/settings/
 """
 
 from pathlib import Path
-
+import dj_database_url
 import environ
 # Initialise environment variables
 env = environ.Env()
@@ -107,14 +107,21 @@ WSGI_APPLICATION = "gumroad_clone.wsgi.application"
 #         "NAME": BASE_DIR / "db.sqlite3",
 #     }
 # }
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': env('DATABASE_NAME'),
+#         'USER': env('DATABASE_USERNAME'),
+#         'PASSWORD': env('DATABASE_PASSWORD'),
+#         'HOST': env('MYSQL_HOST'),
+#     }
+# }
 DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': env('DATABASE_NAME'),
-        'USER': env('DATABASE_USERNAME'),
-        'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('MYSQL_HOST'),
-    }
+    'default': dj_database_url.config(
+        default=env('MYSQL_URL'),
+        conn_max_age=600,
+        conn_health_checks=True,
+    )
 }
 
 ADMIN_URL = "admin/"

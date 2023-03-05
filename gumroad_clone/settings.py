@@ -113,7 +113,7 @@ DATABASES = {
         'NAME': env('DATABASE_NAME'),
         'USER': env('DATABASE_USERNAME'),
         'PASSWORD': env('DATABASE_PASSWORD'),
-        'HOST': env('MYSQL_URL'),
+        'HOST': env('MYSQL_HOST'),
     }
 }
 

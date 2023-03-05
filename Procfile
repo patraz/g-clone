@@ -1,2 +1,3 @@
 web: gunicorn gumroad_clone.wsgi
-web: manage.py migrate
+web: python manage.py makemigrations
+web: python manage.py migrate

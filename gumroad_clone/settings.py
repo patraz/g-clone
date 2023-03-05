@@ -110,10 +110,10 @@ WSGI_APPLICATION = "gumroad_clone.wsgi.application"
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': '30p1996$gumroad',
-        'USER': '30p1996',
-        'PASSWORD': 'gumroaD123',
-        'HOST': '30p1996.mysql.pythonanywhere-services.com',
+        'NAME': env('DATABASE_NAME'),
+        'USER': env('DATABASE_USERNAME'),
+        'PASSWORD': env('DATABASE_PASSWORD'),
+        'HOST': env('MYSQL_URL'),
     }
 }
 

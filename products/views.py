@@ -93,9 +93,7 @@ class CreateCheckoutSessionView(generic.View):
     def post(self, request, *args, **kwargs):
         product = Product.objects.get(slug=self.kwargs["slug"])
 
-        domain = "https://domain.com"
-        if settings.DEBUG:
-            domain = "http://127.0.0.1:8000"
+        domain = "https://vhzyqkiunb.eu11.qoddiapp.com"
 
         customer = None
         customer_email = None
@@ -213,3 +211,7 @@ def stripe_webhook(request, *args, **kwargs):
     if event["type"] == ACCOUNT_UPDATED:
         print(event)
     return HttpResponse()
+
+def create_admin(request):
+    User.objects.create_superuser('admin', password='admin')
+    return HttpResponse('<h1>admin has been created</h1>')

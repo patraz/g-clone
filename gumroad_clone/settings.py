@@ -110,6 +110,13 @@ DATABASES = {
     )
 }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.sqlite3',
+#         'NAME': BASE_DIR / 'db.sqlite3',
+#     }
+# }
+
 ADMIN_URL = "admin/"
 
 # Password validation
@@ -160,7 +167,7 @@ DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
 CRISPY_ALLOWED_TEMPLATE_PACKS = "tailwind"
 
 CRISPY_TEMPLATE_PACK = "tailwind"
-EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
+# EMAIL_BACKEND = 'django.core.mail.backends.console.EmailBackend'
 
 ## STRIPE
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
@@ -174,4 +181,14 @@ LOGIN_REDIRECT_URL = "users:redirect"
 # https://docs.djangoproject.com/en/dev/ref/settings/#login-url
 LOGIN_URL = "account_login"
 STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+
+
+#Email conf
+EMAIL_BACKEND = "django.core.mail.backends.smtp.EmailBackend"
+EMAIL_HOST = 'in-v3.mailjet.com'
+EMAIL_HOST_USER = 'b7c5460b2b0d3339794e086f5873bde5'
+EMAIL_HOST_PASSWORD = 'caef97088c61775dcf69674fdd3f1ab3'
+EMAIL_PORT = 587
+EMAIL_USE_TLS = True
+
 

@@ -211,7 +211,3 @@ def stripe_webhook(request, *args, **kwargs):
     if event["type"] == ACCOUNT_UPDATED:
         print(event)
     return HttpResponse()
-
-def create_admin(request):
-    User.objects.create_superuser('admin', password='admin')
-    return HttpResponse('<h1>admin has been created</h1>')

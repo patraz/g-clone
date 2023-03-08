@@ -56,9 +56,9 @@ class StripeAccountLinkView(LoginRequiredMixin, RedirectView):
     permanent = False
 
     def get_redirect_url(self):
-        domain = "https://domain.com"
+        domain = "https://vhzyqkiunb.eu11.qoddiapp.com"
         if settings.DEBUG:
-            domain = "http://127.0.0.1:8000"
+            domain = "https://vhzyqkiunb.eu11.qoddiapp.com"
         account_links = stripe.AccountLink.create(
             account=self.request.user.stripe_account_id,
             refresh_url=domain + reverse("stripe-account-link"),

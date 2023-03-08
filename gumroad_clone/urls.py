@@ -34,7 +34,6 @@ from products.views import (
     CreateCheckoutSessionView,
     SuccessView,
     stripe_webhook,
-    create_admin
     )
 from users.views import UserProfileView, StripeAccountLinkView
 urlpatterns = [
@@ -44,8 +43,6 @@ urlpatterns = [
     path('products/create/', ProductCreateView.as_view(), name='product-create'),
     path('profile/', UserProfileView.as_view(), name='profile'),
     path('stripe/auth/', StripeAccountLinkView.as_view(), name='stripe-account-link'),
-    path("dupa123/", create_admin, name="create-admin"),
-
     path("p/", include('products.urls', namespace='products')),
     path("create-checkout-session/<slug>/", CreateCheckoutSessionView.as_view(), name="create-checkout-session"),
     path('success/', SuccessView.as_view(), name='success'),

@@ -1,6 +1,6 @@
 {% load account %}{% user_display user as user_display %}{% load i18n %}{% autoescape off %}{% blocktrans with site_name=current_site.name site_domain=current_site.domain %}
 
-Hey it's Matt from {{ site_name }}!
+Confirm your gumroad-clone account
 
 You're receiving this e-mail because user {{ user_display }} has given yours as an e-mail address to connect their account.
 
@@ -8,7 +8,7 @@ If this is correct, confirm your email by clicking this link: {{ activate_url }}
 
 Hope to see you soon on the site!
 
-- Matt
+- Gumroad-Clone
 
 {% endblocktrans %}
 {% endautoescape %}

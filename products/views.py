@@ -144,7 +144,7 @@ class CreateCheckoutSessionView(generic.View):
                 'quantity': 1,
                 }],
                 payment_intent_data={
-                    "application_fee_amount": 123,
+                    "application_fee_amount": 200,
                     "transfer_data": {"destination": product.user.stripe_account_id},
                 },
                 mode='payment',

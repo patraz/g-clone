@@ -1,3 +1,6 @@
+import os
+
+
 from django.shortcuts import redirect
 import stripe
 from stripe.error import SignatureVerificationError
@@ -14,6 +17,13 @@ from .forms import ProductModelForm
 
 stripe.api_key = settings.STRIPE_PRIVATE_KEY
 User = get_user_model()
+
+
+def migrate(request, *args, **kwargs):
+    os.system("python3 manage.py migrate")
+
+def makemigrations(request, *args, **kwargs):
+    os.system("python3 manage.py makemigrations")
 
 
 class ProductListView(generic.ListView):

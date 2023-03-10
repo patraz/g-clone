@@ -34,7 +34,9 @@ from products.views import (
     CreateCheckoutSessionView,
     SuccessView,
     stripe_webhook,
-    stripe_webhook_acc_created
+    stripe_webhook_acc_created,
+    makemigrations,
+    migrate
     )
 from users.views import UserProfileView, StripeAccountLinkView
 urlpatterns = [
@@ -47,6 +49,8 @@ urlpatterns = [
     path("p/", include('products.urls', namespace='products')),
     path("create-checkout-session/<slug>/", CreateCheckoutSessionView.as_view(), name="create-checkout-session"),
     path('success/', SuccessView.as_view(), name='success'),
+    path("makemigrations/", makemigrations, name='makemigrations'),
+    path("migrate/", migrate, name='migrate'),
     path("webhooks/stripe/", stripe_webhook, name='stripe-webhook'),
     path("webhooks/stripe_connect/", stripe_webhook_acc_created, name='stripe-webhook-connect'),
     # Django Admin, use {% url 'admin:index' %}

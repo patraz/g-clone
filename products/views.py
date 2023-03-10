@@ -28,6 +28,7 @@ class ProductDetailView(generic.DetailView):
 
     def get_context_data(self, **kwargs):
         context = super(ProductDetailView, self).get_context_data(**kwargs)
+        
         product = self.get_object()
         has_access = False
         if self.request.user.is_authenticated:
@@ -46,6 +47,15 @@ class UserProductListView(LoginRequiredMixin, generic.ListView):
 
     def get_queryset(self):
         return Product.objects.filter(user=self.request.user)
+    
+    def get_context_data(self, **kwargs):
+        user = User.objects.get(email=self.request.user.email)
+        context = super(UserProductListView, self).get_context_data(**kwargs)
+
+        context['object_list'] = Product.objects.filter(user=self.request.user)
+        context['details_submitted'] = user.stripe_account_connected
+
+        return context
 
 
 class ProductCreateView(LoginRequiredMixin, generic.CreateView):
@@ -94,6 +104,7 @@ class CreateCheckoutSessionView(generic.View):
         product = Product.objects.get(slug=self.kwargs["slug"])
 
         domain = "https://vhzyqkiunb.eu11.qoddiapp.com"
+        
 
         customer = None
         customer_email = None
@@ -147,16 +158,15 @@ class SuccessView(generic.TemplateView):
 @csrf_exempt
 def stripe_webhook(request, *args, **kwargs):
     CHECKOUT_SESSION_COMPLETED = "checkout.session.completed"
-    ACCOUNT_UPDATED = "account.updated"
-
     payload = request.body
     sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
+    
 
     try:
         event = stripe.Webhook.construct_event(
             payload,
             sig_header,
-            settings.STRIPE_WEBHOOK_SECRET 
+            settings.STRIPE_WEBHOOK_SECRET
         )
     except ValueError as e:
         print(e)
@@ -168,8 +178,6 @@ def stripe_webhook(request, *args, **kwargs):
 
 
     if event["type"] == CHECKOUT_SESSION_COMPLETED:
-        print(event)
-
         product_id = event["data"]["object"]["metadata"]["product_id"]
 
         product = Product.objects.get(id=product_id)
@@ -207,7 +215,38 @@ def stripe_webhook(request, *args, **kwargs):
                 print("User does not exist")
                 pass
             
+    return HttpResponse()
 
-    if event["type"] == ACCOUNT_UPDATED:
-        print(event)
+@csrf_exempt
+def stripe_webhook_acc_created(request, *args, **kwargs):
+    EXTERNAL_ACCOUNT_CREATED = "account.external_account.created"
+
+    payload = request.body
+    sig_header = request.META["HTTP_STRIPE_SIGNATURE"]
+
+
+    try:
+        event = stripe.Webhook.construct_event(
+            payload,
+            sig_header,
+            settings.STRIPE_CONNECT_WEBHOOK_SECRET 
+        )
+    except ValueError as e:
+        print(e)
+        return HttpResponse(status=400)
+    except SignatureVerificationError as e:
+        print(e)
+        return HttpResponse(status=400)
+
+
+
+    if event["type"] == EXTERNAL_ACCOUNT_CREATED:
+        account = event["account"]
+        user = User.objects.get(stripe_account_id=account)
+        user.stripe_account_connected = True
+        user.save()
+  
+
+        
+
     return HttpResponse()

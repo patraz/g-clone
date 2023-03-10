@@ -19,7 +19,8 @@ class UserAdmin(auth_admin.UserAdmin):
             "name", 
             "email", 
             "stripe_customer_id",
-            "stripe_account_id"
+            "stripe_account_id",
+            "stripe_account_connected"
             )}),
         (
             _("Permissions"),
@@ -35,5 +36,5 @@ class UserAdmin(auth_admin.UserAdmin):
         ),
         (_("Important dates"), {"fields": ("last_login", "date_joined")}),
     )
-    list_display = ["username", "stripe_customer_id", "stripe_account_id", "name", "is_superuser"]
+    list_display = ["username", "stripe_account_connected",  "stripe_customer_id", "stripe_account_id", "name", "is_superuser"]
     search_fields = ["name"]

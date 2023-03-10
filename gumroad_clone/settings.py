@@ -32,6 +32,10 @@ DEBUG = env("DEBUG")
 
 ALLOWED_HOSTS = [env("ALLOWED_HOSTS")]
 
+if DEBUG:
+    CSRF_TRUSTED_ORIGINS = ['https://vhzyqkiunb.eu11.qoddiapp.com']
+
+
 AUTH_USER_MODEL = 'users.User'
 
 
@@ -172,6 +176,8 @@ CRISPY_TEMPLATE_PACK = "tailwind"
 STRIPE_PUBLIC_KEY = env("STRIPE_PUBLIC_KEY")
 STRIPE_PRIVATE_KEY = env("STRIPE_PRIVATE_KEY")
 STRIPE_WEBHOOK_SECRET = env("STRIPE_WEBHOOK_SECRET")
+STRIPE_CONNECT_WEBHOOK_SECRET = env("STRIPE_CONNECT_WEBHOOK_SECRET")
+
 
 # https://docs.djangoproject.com/en/dev/ref/settings/#auth-user-model
 AUTH_USER_MODEL = "users.User"

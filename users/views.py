@@ -12,6 +12,12 @@ stripe.api_key = settings.STRIPE_PRIVATE_KEY
 
 class UserProfileView(LoginRequiredMixin, TemplateView):
     template_name = "profile.html"
+    def get_context_data(self, *args, **kwargs):
+            context = super(UserProfileView, self).get_context_data(*args, **kwargs)
+            user = User.objects.get(email=self.request.user.email)
+            
+            context['details_submitted'] = user.stripe_account_connected
+            return context
 
 
 class UserDetailView(LoginRequiredMixin, DetailView):
@@ -58,7 +64,7 @@ class StripeAccountLinkView(LoginRequiredMixin, RedirectView):
     def get_redirect_url(self):
         domain = "https://vhzyqkiunb.eu11.qoddiapp.com"
         if settings.DEBUG:
-            domain = "https://vhzyqkiunb.eu11.qoddiapp.com"
+            domain = "https://d44a-109-173-214-110.eu.ngrok.io"
         account_links = stripe.AccountLink.create(
             account=self.request.user.stripe_account_id,
             refresh_url=domain + reverse("stripe-account-link"),

@@ -27,6 +27,8 @@ class User(AbstractUser):
     last_name = None  # type: ignore
     stripe_customer_id = models.CharField(max_length=100, blank=True, null=True)
     stripe_account_id =  models.CharField(max_length=100)
+    stripe_account_connected = models.BooleanField(default=False)
+
     def get_absolute_url(self):
         """Get url for user's detail view.
 
